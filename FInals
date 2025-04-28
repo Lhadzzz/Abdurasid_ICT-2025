@@ -1,0 +1,37 @@
+import pandas as pd
+import numpy as np
+from scipy import stats
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the CSV file
+df = pd.read_csv('datasets.csv')
+
+# Check the first few rows
+print(df.head())
+
+# Select columns
+x = df['GDP']
+y = df['Dept']
+
+# Calculate Pearson correlation
+pearson_corr, p_value = stats.pearsonr(x, y)
+print(f"Pearson Correlation Coefficient: {pearson_corr:.3f}, P-value: {p_value:.3e}")
+
+# Full correlation matrix
+print(df.corr())
+
+# Set plot style
+sns.set(style="whitegrid")
+
+# Create a line plot
+plt.figure(figsize=(12, 7))
+plt.plot(df.index, x, color='blue', label='GDP', linewidth=2)   # Blue line for GDP
+plt.plot(df.index, y, color='red', label='Dept', linewidth=2)    # Red line for Dept
+plt.title(f"Line Plot of GDP and Dept (r = {pearson_corr:.2f})")
+plt.xlabel('Index')
+plt.ylabel('Values')
+plt.legend()
+plt.grid(True)
+plt.show()
